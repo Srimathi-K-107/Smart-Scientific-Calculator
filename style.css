@@ -1,0 +1,565 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0b1020;
+    --card: #121a2e;
+    --display: #0c1426;
+    --button: #1c2740;
+    --button-hover: #293957;
+    --text: #f4f6ff;
+    --muted: #8d9ab7;
+    --border: rgba(148, 163, 184, 0.15);
+    --purple: #8b5cf6;
+    --purple-light: #a78bfa;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background:
+        radial-gradient(ellipse at 15% 10%, #252052 0%, transparent 38%),
+        radial-gradient(ellipse at 90% 90%, #142d4b 0%, transparent 35%),
+        var(--bg);
+    color: var(--text);
+}
+
+button {
+    font-family: inherit;
+}
+
+.calculator-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 16px;
+}
+
+.parent {
+    width: 100%;
+    max-width: 1050px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: rgba(18, 26, 46, 0.94);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+}
+
+/* Header */
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.brand-label,
+.history-label {
+    display: inline-block;
+    color: var(--purple-light);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    font-size: clamp(27px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 0;
+}
+
+.header h1 span {
+    color: var(--purple-light);
+}
+
+.header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 7px 0 0;
+}
+
+.icon {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--button);
+    color: var(--text);
+    font-size: 20px;
+    transition: 0.2s ease;
+}
+
+.icon-btn:hover {
+    background: var(--purple);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Calculator display */
+
+.result {
+    width: 100%;
+    min-height: 155px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--display);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.display-label {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+#resultexp {
+    min-height: 22px;
+    padding-top: 12px;
+    color: var(--purple-light);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+#result {
+    width: 100%;
+    min-height: 55px;
+    height: auto;
+    resize: none;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    text-align: right;
+    font-family: inherit;
+    font-size: clamp(30px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.3;
+    padding: 5px 0;
+}
+
+#result::placeholder {
+    color: var(--text);
+    opacity: 0.9;
+}
+
+/* Memory row */
+
+.memory {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.memory button {
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.memory button:hover {
+    background: var(--button-hover);
+    color: var(--text);
+}
+
+/* Scientific buttons */
+
+.scientific {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 18px;
+}
+
+.scientific button {
+    min-width: 0;
+    min-height: 43px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #19223a;
+    color: var(--purple-light);
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.scientific button:hover {
+    background: var(--purple);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Number pad */
+
+.calcdiv {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 76px;
+    gap: 12px;
+    padding: 0;
+    width: 100%;
+}
+
+.numbersdiv {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+.numbersdiv button,
+.operationdiv button {
+    min-width: 0;
+    min-height: 58px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--button);
+    color: var(--text);
+    font-size: 19px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.numbersdiv button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+.numbersdiv .special-btn {
+    background: rgba(139, 92, 246, 0.13);
+    color: var(--purple-light);
+}
+
+.numbersdiv .special-btn:hover {
+    background: var(--purple);
+    color: white;
+}
+
+.numbersdiv .zero-btn {
+    grid-column: span 2;
+}
+
+/* Operators */
+
+.operationdiv {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, minmax(48px, 1fr));
+    gap: 10px;
+    height: 100%;
+}
+
+.operationdiv .operator-btn {
+    background: #222b47;
+    color: var(--purple-light);
+    font-size: 22px;
+}
+
+.operationdiv .operator-btn:hover {
+    background: #3b2d66;
+    transform: translateY(-2px);
+}
+
+.operationdiv .equal-btn {
+    background: linear-gradient(135deg, #8b5cf6, #6d42db);
+    color: white;
+    border: none;
+    font-size: 24px;
+    box-shadow: 0 7px 20px rgba(139, 92, 246, 0.25);
+}
+
+.operationdiv .equal-btn:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+}
+
+/* History */
+
+.history {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(12, 20, 38, 0.75);
+    gap: 18px;
+}
+
+.hisheader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid var(--border);
+}
+
+.hisheader h3 {
+    font-size: 21px;
+    font-weight: 700;
+    margin: 0;
+}
+
+#clearhis {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    border-radius: 10px;
+    background: rgba(248, 113, 113, 0.08);
+    color: #fb8585;
+    font-size: 12px;
+}
+
+#clearhis:hover {
+    background: rgba(248, 113, 113, 0.18);
+}
+
+.historymsg {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    overflow-wrap: anywhere;
+}
+
+.empty-history {
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 9px;
+}
+
+.empty-history i {
+    display: grid;
+    place-items: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 18px;
+    background: rgba(139, 92, 246, 0.12);
+    color: var(--purple-light);
+    font-size: 26px;
+}
+
+.empty-history p {
+    margin: 5px 0 0;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.empty-history small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* History items created by JavaScript */
+
+#historyaddingdiv > div:not(.empty-history) {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--button);
+    overflow-wrap: anywhere;
+    transition: 0.2s ease;
+}
+
+#historyaddingdiv > div:not(.empty-history):hover {
+    border-color: var(--purple);
+}
+
+/* Footer */
+
+.footer-text {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.footer-text span:first-child {
+    color: var(--purple-light);
+    font-weight: 800;
+}
+
+/* Light theme: compatible with body.dark toggle */
+
+body.dark {
+    --bg: #edf1fa;
+    --card: #ffffff;
+    --display: #f3f5fc;
+    --button: #eef1f9;
+    --button-hover: #e0e5f2;
+    --text: #192039;
+    --muted: #737e99;
+    --border: rgba(54, 65, 95, 0.15);
+    --purple: #7650df;
+    --purple-light: #7650df;
+
+    background: #edf1fa;
+    color: var(--text);
+}
+
+body.dark .parent {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 25px 70px rgba(48, 57, 90, 0.12);
+}
+
+body.dark .scientific button {
+    background: #f0edff;
+}
+
+body.dark .operationdiv .operator-btn {
+    background: #e9e5fb;
+}
+
+body.dark .history {
+    background: #f8f9fd;
+}
+
+body.dark .numbersdiv .special-btn {
+    background: #eee9ff;
+}
+
+body.dark .operationdiv .equal-btn {
+    background: linear-gradient(135deg, #8b5cf6, #6d42db);
+    color: white;
+}
+
+body.dark .icon-btn {
+    background: #f0f2f9;
+    color: var(--text);
+}
+
+/* Responsive */
+
+@media (max-width: 575.98px) {
+    .calculator-page {
+        padding: 14px 8px;
+        align-items: flex-start;
+    }
+
+    .parent {
+        padding: 17px 13px;
+        border-radius: 21px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .header p {
+        max-width: 210px;
+        font-size: 11px;
+    }
+
+    .icon-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
+
+    .result {
+        padding: 17px;
+        min-height: 140px;
+    }
+
+    .scientific {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .scientific button {
+        min-height: 39px;
+        font-size: 12px;
+        padding: 5px 2px;
+    }
+
+    .calcdiv {
+        grid-template-columns: minmax(0, 1fr) 58px;
+        gap: 8px;
+    }
+
+    .numbersdiv,
+    .operationdiv {
+        gap: 7px;
+    }
+
+    .numbersdiv button,
+    .operationdiv button {
+        min-height: 49px;
+        padding: 5px;
+        font-size: 17px;
+        border-radius: 12px;
+    }
+
+    .operationdiv {
+        grid-template-rows: repeat(5, minmax(42px, 1fr));
+    }
+
+    .memory {
+        gap: 7px;
+    }
+
+    .memory button {
+        min-height: 38px;
+        font-size: 11px;
+    }
+
+    .history {
+        min-height: 250px;
+        padding: 17px;
+    }
+
+    .footer-text {
+        font-size: 9px;
+    }
+}
